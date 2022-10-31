@@ -5,8 +5,8 @@ function ToDoList() {
 }
 
 ToDoList.prototype.addTask = function(taskObject) {
-  //taskObject.taskId = this.assignId();
-  this.list[this.assignId()] = taskObject;
+  taskObject.taskId = this.assignId();
+  this.list[taskObject.taskId] = taskObject;
 }
 
 ToDoList.prototype.assignId = function() {
@@ -41,30 +41,44 @@ let todo = new ToDoList();
 
 function createTaskHtmlElement(task){
   const div = document.createElement('div');
-  const delBtn = document.createElement('button');
-  const chkBtn = document.createElement('button');
+  const chkBox = document.createElement('input');
   const text = document.createElement('input');
 
-  delBtn.append("Delete");
+  chkBox.append("Done");
+  chkBox.setAttribute("id", task.taskId);
+  chkBox.setAttribute("value", task.taskId);
+  chkBox.setAttribute("name", "checklist");
+  chkBox.setAttribute("class", "checkbox");
+  chkBox.setAttribute("type", "checkbox");
   text.setAttribute("value",task.taskName);
-  chkBtn.append("Done");
-  div.append(delBtn);
+  text.setAttribute("id",task.taskId);
+  text.setAttribute("name",task.taskId);
+
+  div.append(chkBox);
   div.append(text);
-  div.append(chkBtn);
 
   return div;
 }
+
 function showTasks(toDoList) {
-  let listDiv = document.getElementById('listDiv');
+  let listDiv = document.getElementById('checkBoxList');
   listDiv.replaceChildren("");
   Object.keys(toDoList).forEach( function(key) {
     const task = toDoList[key];
-    const div = createTaskHtmlElement(task);    
-    // div.append(delBtn);    
-    // div.append(task.taskName);
-    // div.append(chkBtn);
-    listDiv.append(div);
+    const div = createTaskHtmlElement(task);
+    listDiv.append(div);    
   });  
+}
+
+function handleDelete(event) {
+  let checklist = document.getElementsByName('checklist');
+  checklist.forEach(function (item) {
+    if(item.checked)
+    {
+      todo.removeTask(item.value);
+    }
+  });
+  showTasks(todo.list); 
 }
 
 window.addEventListener('load',function() {
@@ -75,5 +89,6 @@ window.addEventListener('load',function() {
     todo.addTask(task);
     showTasks(todo.list);
     console.log(todo.list);
+    document.getElementById("delete").addEventListener("click", handleDelete);
   });
 });
