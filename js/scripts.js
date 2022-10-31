@@ -4,16 +4,16 @@ let task3 = { name: "third thing to do"};
 let taskList = { name: "to do list", tasks: [task1, task2, task3] };
 
 function ToDoList() {
-  this.taskList = {};
+  this.list = {};
   this.taskId = 0;
 }
 
-toDoList.prototype.addTask = function(taskObject) {
+ToDoList.prototype.addTask = function(taskObject) {
   taskObject.taskId = this.assignId();
-  this.taskList[taskObject.taskId] = taskObject;
+  this.list[taskObject.taskId] = taskObject;
 }
 
-toDoList.prototype.assignId = function() {
+ToDoList.prototype.assignId = function() {
   this.taskId += 1;
   return this.taskId;
 };
@@ -23,3 +23,10 @@ function Task(taskName) {
   this.status = "ToDo";
 }
 
+toDoList.prototype.removeTask = function(id) {
+  if (this.list[id] === undefined) {
+    return false;
+  }
+  delete this.list[id];
+  return true;
+};
