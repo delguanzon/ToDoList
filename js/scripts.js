@@ -23,10 +23,17 @@ function Task(taskName) {
   this.status = "ToDo";
 }
 
-toDoList.prototype.removeTask = function(id) {
+ToDoList.prototype.removeTask = function(id) {
   if (this.list[id] === undefined) {
     return false;
   }
   delete this.list[id];
   return true;
 };
+
+ToDoList.prototype.updateTaskStat = function (id) {
+  this.newStatus = "done"
+  this.list[id]["status"] = this.newStatus;
+}
+
+
