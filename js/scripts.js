@@ -27,6 +27,11 @@ ToDoList.prototype.updateTaskStat = function (id) {
   this.list[id]["status"] = this.newStatus;
 }
 
+ToDoList.prototype.updateTask = function (id, newTask) {
+  this.newTask = newTask
+  this.list[id]["taskName"] = this.newTask;
+}
+
 // Buisness Logic for Task --------
 
 function Task(taskName) {
@@ -44,7 +49,6 @@ function createTaskHtmlElement(task){
   const chkBox = document.createElement('input');
   const text = document.createElement('input');
 
-  chkBox.append("Done");
   chkBox.setAttribute("id", task.taskId);
   chkBox.setAttribute("value", task.taskId);
   chkBox.setAttribute("name", "checklist");
@@ -52,12 +56,19 @@ function createTaskHtmlElement(task){
   chkBox.setAttribute("type", "checkbox");
   text.setAttribute("value",task.taskName);
   text.setAttribute("id",task.taskId);
-  text.setAttribute("name",task.taskId);
-
+  text.setAttribute("class", "taskInput");
+  text.setAttribute("class", task.status);
+  //div.setAttribute("class", task.status);
   div.append(chkBox);
   div.append(text);
-
+  
   return div;
+}
+
+function updateTask(event) {
+  if(event.key === "Enter") {
+    todo.updateTask(event.target.id, event.target.value);
+  }
 }
 
 function showTasks(toDoList) {
@@ -66,8 +77,8 @@ function showTasks(toDoList) {
   Object.keys(toDoList).forEach( function(key) {
     const task = toDoList[key];
     const div = createTaskHtmlElement(task);
-    listDiv.append(div);    
-  });  
+    listDiv.append(div);
+  });
 }
 
 function handleDelete(event) {
@@ -76,6 +87,17 @@ function handleDelete(event) {
     if(item.checked)
     {
       todo.removeTask(item.value);
+    }
+  });
+  showTasks(todo.list); 
+}
+
+function handleDone(event) {
+  let checklist = document.getElementsByName('checklist');
+  checklist.forEach(function (item) {
+    if(item.checked)
+    {
+      todo.updateTaskStat(item.value);
     }
   });
   showTasks(todo.list); 
@@ -90,5 +112,7 @@ window.addEventListener('load',function() {
     showTasks(todo.list);
     console.log(todo.list);
     document.getElementById("delete").addEventListener("click", handleDelete);
+    document.getElementById("done").addEventListener("click", handleDone);
+    
   });
 });

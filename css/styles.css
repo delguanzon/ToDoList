@@ -1,0 +1,63 @@
+html {
+  height: 100%;
+}
+body {
+  background-color: rgb(255, 255, 255);
+  background-size: 1000px;
+  color: rgb(44, 44, 44);
+  font-family: 'Courier New', Courier, monospace;
+  caret-color: rgb(44, 44, 44);
+  width: 1100px;
+  margin: auto;
+  min-height: 90%;
+  display: flex;
+}
+
+#listDiv {
+  width: 700px;
+  border: 1px solid black;
+  height: 500px;
+  display: flex;
+  background-color: rgba(255, 255, 255, 0.74);
+  margin: auto;
+  box-shadow: 5px 5px 2px;
+  opacity: 1;
+  flex-direction: column;
+}
+
+#checkBoxList {
+  height: 400px;
+  overflow:auto;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-flow: column;
+  width: 300px;
+  padding-left: 100px;
+  padding-right: 100px;
+  padding-top: 2px;
+  margin: auto;
+  font-weight: bolder;
+}
+
+#addForm {
+  align-self: flex-end;
+}
+
+#action-btn {
+  align-self: flex-end;
+}
+
+.done {
+  border: none;
+  pointer-events: none;
+  color:rgb(44, 44, 44);  
+  font-style: oblique;
+}
+
+.ToDo {
+  font-weight: bolder;
+  border: none;
+  width: 200px;
+  font-size: 15px;
+}
